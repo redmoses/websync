@@ -19,7 +19,7 @@ var jshint = require('gulp-jshint');
 var changed = require('gulp-changed');
 var nodemon = require('gulp-nodemon');
 var imagemin = require('gulp-imagemin');
-var concatCss = require('gulp-concat-css'); 
+var concatCss = require('gulp-concat-css');
 var source = require('vinyl-source-stream');
 var livereload = require('gulp-livereload');
 var minifyHTML = require('gulp-minify-html');
@@ -134,7 +134,7 @@ var ngAnnotate = require('gulp-ng-annotate');
             .pipe(gulp.dest('dist/assets'));
     });
     gulp.task('server', ['copy-server-to-dist'], function () {
-        gulp.watch(['server.js', 'lib/**'], ['copy-server-to-dist']);
+        gulp.watch(['server.js', 'lib/**', 'app/**'], ['copy-server-to-dist']);
         // If nodemon starts too quick, files hasn't always been copied over before the server is started
         // resulting in nodemon crashing...
         setTimeout(function () {
@@ -158,7 +158,7 @@ var ngAnnotate = require('gulp-ng-annotate');
         ]).on('change', livereload.changed);
     });
     gulp.task('clean', function () {
-        gulp.src(['dist/app', 'dist/lib', 'dist/assets', 'dist/*.json', 'dist/server.js', 'dist/.bowerrc', '!dist/wsdata.json'], {
+        gulp.src(['dist/app', 'dist/lib', 'dist/assets', 'dist/*.json', 'dist/server.js', 'dist/.bowerrc', '!dist/wsdata.json', '!dist/reports.json'], {
             read: false
         }).pipe(rimraf());
     });
