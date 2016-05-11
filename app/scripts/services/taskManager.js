@@ -12,7 +12,9 @@ module.exports = function (toolkit, Restangular) {
 
     Restangular.extendModel('tasks', function (task) {
 
-        if (!task.id) task.id = guid();
+        if (!task.id) {
+            task.id = guid();
+        }
 
         task.hasFlag = function (flag) {
             var found = false;
@@ -75,7 +77,9 @@ module.exports = function (toolkit, Restangular) {
             saveTask(task);
         };
         task.saveDelayed = function (n, o) {
-            if (n === o) return;
+            if (n === o) {
+                return;
+            }
             toolkit.delayAction('task', function () {
                 saveTask(task);
             }, 500);
@@ -96,6 +100,10 @@ module.exports = function (toolkit, Restangular) {
                 tasks.push(clonedTask);
             });
             e.stopPropagation();
+        };
+
+        task.getReports = function () {
+            task.reports = Restangular.one('tasks', task.id).all('reports').getList().$object;
         };
 
         return task;

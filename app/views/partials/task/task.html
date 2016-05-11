@@ -1,4 +1,3 @@
-
 <!--TASK-->
 <div class="panel panel-default">
 
@@ -20,13 +19,15 @@
             <div class="form-group clearfix">
                 <div class="col-xs-6 no-padding-left">
                     <label for="target-{{task.id}}">Source</label>
-                    <select id="target-{{task.id}}" ng-model="task.source.host" ng-options="host.id as host.alias for host in hosts" class="form-control">
+                    <select id="target-{{task.id}}" ng-model="task.source.host"
+                            ng-options="host.id as host.alias for host in hosts" class="form-control">
                         <option value="">Localhost</option>
                     </select>
                 </div>
                 <div class="col-xs-6 no-padding-right">
                     <label for="destination-{{task.id}}">Destination</label>
-                    <select id="destination-{{task.id}}" ng-model="task.destination.host" ng-options="host.id as host.alias for host in hosts" class="form-control">
+                    <select id="destination-{{task.id}}" ng-model="task.destination.host"
+                            ng-options="host.id as host.alias for host in hosts" class="form-control">
                         <option value="">Localhost</option>
                     </select>
                 </div>
@@ -44,7 +45,8 @@
                 <label>Flags</label>
                 <div class="clearfix"></div>
                 <button type="button" class="btn btn-info btn-xs margin-bottom margin-right" title="{{flag.tooltip}}"
-                        ng-repeat="flag in flags" ng-click="task.toggleFlag(flag)" ng-class="{active: task.hasFlag(flag)}">
+                        ng-repeat="flag in flags" ng-click="task.toggleFlag(flag)"
+                        ng-class="{active: task.hasFlag(flag)}">
                     {{flag.name}}
                 </button>
             </div>
@@ -63,7 +65,70 @@
             </div>
 
             <!--TASK LOG PANEL-->
-            <log-panel panel-header="Log" log-entries="log" ></log-panel>
+            <log-panel panel-header="Log" log-entries="log"></log-panel>
+            <br/>
+            <!--REPORT PANEL-->
+            <div class="panel panel-default">
+                <div class="panel-heading clearfix" data-toggle="collapse"
+                     data-parent="#accordion" ng-click="task.getReports()"
+                     href="#collapse-report-{{task.id}}">
+                    <h5 class="panel-title">Reports</h5>
+                    <!--<button type="button" class="btn btn-default btn-xs pull-right" ng-click="reportCollapsed = !reportCollapsed"-->
+                    <!--ng-switch on="reportCollapsed">-->
+                    <!--<span ng-switch-when="true" class="glyphicon glyphicon-plus"></span>-->
+                    <!--<span ng-switch-when="false" class="glyphicon glyphicon-minus"></span>-->
+                    <!--</button>-->
+                </div>
+                <div id="collapse-report-{{task.id}}" class="panel-collapse collapse container-fluid">
+                    <ul class="list-group" style="max-height: 300px; overflow: scroll;">
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <strong>Job Started</strong>
+                                </div>
+                                <div class="col-xs-3">
+                                    <strong>Job Ended</strong>
+                                </div>
+                                <div class="col-xs-3">
+                                    <strong>Duration</strong>
+                                </div>
+                                <div class="col-xs-3">
+                                    <strong>Status</strong>
+                                </div>
+                            </div>
+                        </li>
+                        <li ng-repeat="report in task.reports"
+                            class="list-group-item list-group-item-{{report.statusClass}}">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    {{report.started}}
+                                </div>
+                                <div class="col-xs-3">
+                                    {{report.stopped}}
+                                </div>
+                                <div class="col-xs-3">
+                                    {{report.duration}}
+                                </div>
+                                <div class="col-xs-3">
+                                    {{report.status}}
+                                    <button class="btn btn-info pull-right" ng-click="toggleLogs(report.id)">
+                                        Logs
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row" id="report-log-{{report.id}}" style="display: none;">
+                                <div class="col-xs-12">
+                                    <ul class="list-group">
+                                        <li class="list-group-item" ng-repeat="log in report.logs">
+                                            {{log}}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
 
         </div>
 

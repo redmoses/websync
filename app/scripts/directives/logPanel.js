@@ -4,7 +4,7 @@
 'use strict';
 
 var React = require('react');
-
+//
 //<div class="form-group panel panel-default">
 //    <div class="panel-heading">
 //        <h5 class="panel-title" style="display: inline;">Log</h5>

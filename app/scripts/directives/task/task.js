@@ -23,7 +23,7 @@ module.exports = function ($socket, pathHelper) {
                 if (data && data.error) {
                     var msg = data.error + ' (' + data.errorCode.message + ')';
                     log.push({type: 'list-group-item-danger', msg: msg});
-                    log.push({type: 'list-group-item-danger', msg: data.cmd });
+                    log.push({type: 'list-group-item-danger', msg: data.cmd});
                 } else {
                     log.push({type: 'list-group-item-success', msg: 'Task finished Successfully!'});
                     log.push({type: 'list-group-item-success', msg: data.cmd});
@@ -50,6 +50,15 @@ module.exports = function ($socket, pathHelper) {
             $socket.on('task.error.' + task.id, $scope, function (data) {
                 log.push({type: 'list-group-item-danger', msg: data});
             });
+
+            $scope.toggleLogs = function (taskId) {
+                var e_log = document.getElementById('report-log-' + taskId);
+                if (e_log.style.display === 'block') {
+                    e_log.style.display = 'none';
+                } else {
+                    e_log.style.display = 'block';
+                }
+            };
 
             $scope.$watch('task.name', task.saveDelayed);
             $scope.$watch('task.source.host', task.saveDelayed);
